@@ -6,6 +6,8 @@
 """
 import base64
 import pathlib
+import re
+import sys
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
@@ -93,30 +95,77 @@ standalone = logo_svg(embed_font=True)
 (HERE / "logo.svg").write_text(standalone)
 print(f"assets/logo.svg          {len(standalone):>7,} bytes")
 
-# 2. instagram photo tiles (real posts, embedded so index.html stays self-contained)
-TILES = [
-    ("shirts", "Slim fit blue and white school shirts on our superstars"),
-    ("trousers", "Grey school trousers and shorts with adjustable waists"),
-    ("skirts-pleated", "Pleated school skirts with permanent pleats"),
-    ("shoes", "School shoes with glitter stripe trims and gripped soles"),
-    ("skirts-senior", "Senior girls two-pleat skirts"),
-    ("uniforms-supplies", "Top-quality uniforms and school supplies"),
+# 2. photos: sources in assets/insta/, web versions generated into assets/web/
+from PIL import Image
+
+WEB = HERE / "web"
+WEB.mkdir(exist_ok=True)
+
+# order defines the gallery flow
+GALLERY = [
+    ("kids-group", "Our superstars in The School Shop blue and white"),
+    ("trousers-grey", "Grey regular-fit school trousers with Teflon® finish"),
+    ("shoes-lol", "L.O.L Surprise character sneakers"),
+    ("shirts-blue", "Slim-fit blue short-sleeve school shirts"),
+    ("skirt-navy-2pleat", "Navy two-pleat senior girls skirt"),
+    ("kid-boy", "Blue short-sleeve shirt and navy shorts — ready for class"),
+    ("shoes-black-leather", "Classic black leather school shoes"),
+    ("shirts-white", "Non-iron white school shirts — zero ironing needed"),
+    ("skirt-navy-pleated", "Navy pleated skirt with permanent pleats"),
+    ("girl-stain-resistant", "Stain-resistant shirts, tested on real school days"),
+    ("shorts-navy", "Navy school shorts in a new slimmer cut"),
+    ("polos-red", "Pure cotton polo shirts — stain resistant"),
+    ("shoes-black-canvas", "Black lace-up canvas shoes with gripped soles"),
 ]
-tiles_html = []
-for name, alt in TILES:
-    img_b64 = base64.b64encode((HERE / "insta" / f"{name}.sq.jpg").read_bytes()).decode()
-    tiles_html.append(
-        f'      <a class="tile tile--photo reveal" href="https://www.instagram.com/the_school_shop_/"'
-        f' target="_blank" rel="noopener" title="{alt}">'
-        f'<img src="data:image/jpeg;base64,{img_b64}" alt="{alt}" loading="lazy"></a>'
-    )
+CAT_PHOTOS = ["shirts-white", "trousers-grey", "skirt-navy-2pleat",
+              "shoes-black-leather", "polos-red"]
+
+for slug, _ in GALLERY:
+    im = Image.open(HERE / "insta" / f"{slug}.jpg").convert("RGB")
+    w, h = im.size
+    if max(w, h) > 800:
+        scale = 800 / max(w, h)
+        im = im.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
+    im.save(WEB / f"gal-{slug}.jpg", "JPEG", quality=80, optimize=True)
+
+for slug in CAT_PHOTOS:
+    im = Image.open(HERE / "insta" / f"{slug}.jpg").convert("RGB")
+    w, h = im.size
+    tw, th = (w, round(w * 3 / 4)) if h >= w * 3 / 4 else (round(h * 4 / 3), h)
+    im = im.crop(((w - tw) // 2, (h - th) // 2, (w + tw) // 2, (h + th) // 2))
+    if im.width > 720:
+        im = im.resize((720, 540), Image.LANCZOS)
+    im.save(WEB / f"cat-{slug}.jpg", "JPEG", quality=80, optimize=True)
+
+gallery_html = "\n".join(
+    f'      <figure class="reveal"><img src="__IMG:gal-{slug}__" alt="{alt}" loading="lazy"></figure>'
+    for slug, alt in GALLERY
+)
 
 template = (ROOT / "index.template.html").read_text()
 hero = logo_svg(embed_font=False, extra_attrs='class="hero__logo"')
-html = (template
+page = (template
         .replace("__FONT_TITAN__", titan_b64)
         .replace("__FONT_BALOO__", baloo_b64)
         .replace("__HERO_LOGO__", hero)
-        .replace("__INSTA_TILES__", "\n".join(tiles_html)))
+        .replace("__GALLERY__", gallery_html))
+
+# index.html references the generated files (fast, cacheable)
+html = re.sub(r"__IMG:([a-z0-9-]+)__", r"assets/web/\1.jpg", page)
 (ROOT / "index.html").write_text(html)
 print(f"index.html               {len(html):>7,} bytes")
+
+# optional artifact build: same page with photos inlined as data URIs
+if len(sys.argv) > 1 and sys.argv[1] == "--artifact":
+    def embed(m):
+        data = base64.b64encode((WEB / f"{m.group(1)}.jpg").read_bytes()).decode()
+        return f"data:image/jpeg;base64,{data}"
+    full = re.sub(r"__IMG:([a-z0-9-]+)__", embed, page)
+    style = re.search(r"<style>(.*?)</style>", full, re.S).group(1)
+    body = re.search(r"<body>(.*?)</body>", full, re.S).group(1)
+    out = ("<title>The School Shop — Quality school uniforms, made properly</title>\n"
+           '<script>document.documentElement.classList.add("js")</script>\n'
+           f"<style>{style}</style>\n{body}")
+    path = pathlib.Path(sys.argv[2])
+    path.write_text(out)
+    print(f"{path.name:24} {len(out):>7,} bytes")
