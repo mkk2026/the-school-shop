@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js')</script>
+<title>The School Shop — Quality school uniforms, made properly</title>
+<meta name="description" content="The School Shop: manufacturer and supplier of quality uniforms for schools and organisations. Shirts, trousers, skirts, shoes and more — with worldwide shipping. DM us on Instagram @the_school_shop_">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ClothingStore",
+  "name": "The School Shop",
+  "description": "Manufacturer and supplier of quality uniforms for schools and organisations. Worldwide shipping.",
+  "telephone": "+23276602248",
+  "email": "info@theschoolshop.org",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "29B Kingharman Road",
+    "addressLocality": "Freetown",
+    "addressCountry": "SL"
+  },
+  "sameAs": ["https://www.instagram.com/the_school_shop_/"]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='30' cy='62' r='22' fill='%238C1FA8'/%3E%3Ccircle cx='70' cy='62' r='22' fill='%238C1FA8'/%3E%3Ccircle cx='50' cy='58' r='28' fill='%238C1FA8'/%3E%3Crect x='38' y='22' width='24' height='28' rx='4' fill='%238C1FA8'/%3E%3Cpath d='M 32 22 L 50 8 L 68 22' stroke='%238C1FA8' stroke-width='8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<style>
+/* ============ fonts ============ */
+@font-face{
+  font-family:'Titan One';
+  src:url(data:font/woff2;base64,__FONT_TITAN__) format('woff2');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Baloo 2';
+  src:url(data:font/woff2;base64,__FONT_BALOO__) format('woff2');
+  font-weight:400 800;font-style:normal;font-display:swap;
+}
+
+/* ============ tokens ============ */
+:root{
+  --purple:#8C1FA8;
+  --purple-deep:#4A0E63;
+  --night:#1B0826;
+  --ink:#2A1533;
+  --pink:#FF2E64;
+  --yellow:#FFDD15;
+  --cyan:#35DDF2;
+  --green:#3FDE8A;
+  --cream:#FFF7EC;
+  --white:#FFFFFF;
+  --radius:26px;
+  --display:'Titan One','Arial Black',sans-serif;
+  --body:'Baloo 2','Segoe UI',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:var(--cream);
+  font-size:1.06rem;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.12}
+section{position:relative}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* ============ ticker ============ */
+.ticker{
+  background:var(--yellow);
+  overflow:hidden;
+  border-bottom:3px solid var(--ink);
+  font-weight:700;
+  white-space:nowrap;
+}
+.ticker__inner{
+  display:inline-block;
+  padding:8px 0;
+  animation:ticker 28s linear infinite;
+}
+.ticker__inner span{margin:0 26px;display:inline-block}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============ nav ============ */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,247,236,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:3px solid var(--ink);
+}
+.nav__row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 22px;max-width:1120px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:44px;height:44px}
+.brand__name{font-family:var(--display);font-size:1.15rem;letter-spacing:.5px}
+.brand__name .c1{color:var(--pink)}
+.brand__name .c2{color:var(--purple)}
+.nav__links{display:flex;gap:26px;list-style:none;font-weight:700}
+.nav__links a{text-decoration:none;position:relative}
+.nav__links a::after{content:"";position:absolute;left:0;bottom:-4px;height:3px;width:0;background:var(--pink);border-radius:3px;transition:width .25s}
+.nav__links a:hover::after{width:100%}
+.btn{
+  display:inline-block;
+  font-family:var(--display);
+  font-size:1rem;
+  text-decoration:none;
+  padding:12px 26px;
+  border-radius:999px;
+  border:3px solid var(--ink);
+  box-shadow:0 5px 0 var(--ink);
+  transition:transform .15s,box-shadow .15s;
+  cursor:pointer;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--ink)}
+.btn:active{transform:translateY(2px);box-shadow:0 3px 0 var(--ink)}
+.btn--pink{background:var(--pink);color:#fff}
+.btn--green{background:var(--green);color:var(--ink)}
+.btn--yellow{background:var(--yellow);color:var(--ink)}
+.btn--sm{padding:9px 20px;font-size:.9rem}
+.nav__burger{display:none;background:none;border:none;cursor:pointer;padding:6px}
+.nav__burger span{display:block;width:26px;height:3.5px;background:var(--ink);margin:5px 0;border-radius:3px;transition:.25s}
+
+/* ============ hero ============ */
+.hero{
+  background:
+    radial-gradient(2px 2px at 12% 20%,rgba(255,255,255,.55) 50%,transparent 51%),
+    radial-gradient(2px 2px at 82% 14%,rgba(255,255,255,.4) 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 65% 32%,rgba(255,255,255,.45) 50%,transparent 51%),
+    radial-gradient(2px 2px at 30% 44%,rgba(255,255,255,.3) 50%,transparent 51%),
+    radial-gradient(1.5px 1.5px at 90% 52%,rgba(255,255,255,.35) 50%,transparent 51%),
+    radial-gradient(2px 2px at 45% 10%,rgba(255,255,255,.5) 50%,transparent 51%),
+    linear-gradient(180deg,#150420 0%,var(--night) 55%,#2A0B3D 100%);
+  color:#fff;
+  text-align:center;
+  padding:56px 22px 0;
+  overflow:hidden;
+}
+.hero__logo{width:min(430px,78vw);margin:0 auto;filter:drop-shadow(0 18px 40px rgba(255,46,100,.25));animation:bob 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero h1{font-size:clamp(1.7rem,4.4vw,3rem);margin:26px auto 14px;max-width:760px}
+.hero h1 .hl{color:var(--yellow)}
+.hero p.sub{max-width:620px;margin:0 auto 30px;font-size:1.15rem;color:#EAD9F5;font-weight:500}
+.hero__ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+.doodle{position:absolute;pointer-events:none;animation:bob 6s ease-in-out infinite}
+.doodle--star1{top:12%;left:7%;animation-delay:.6s}
+.doodle--star2{top:22%;right:8%;animation-delay:1.4s}
+.doodle--squig{bottom:30%;left:4%;animation-delay:2s}
+.doodle--pencil{bottom:34%;right:5%;animation-delay:.2s;animation-duration:7s}
+@media(max-width:700px){.doodle{transform:scale(.6)}.doodle--squig,.doodle--pencil{display:none}}
+
+.wave{display:block;width:100%;margin-top:-2px}
+
+/* ============ section headers ============ */
+.kicker{
+  display:inline-block;
+  font-weight:800;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  font-size:.82rem;
+  padding:6px 16px;
+  border-radius:999px;
+  border:2.5px solid var(--ink);
+  margin-bottom:14px;
+  background:var(--white);
+}
+h2.title{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:12px}
+.lead{max-width:640px;font-size:1.12rem;font-weight:500}
+.center{text-align:center}
+.center .lead{margin:0 auto}
+
+/* ============ categories ============ */
+.cats{padding:72px 0 84px}
+.cats__grid{
+  margin-top:44px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:22px;
+}
+.card{
+  background:var(--white);
+  border:3px solid var(--ink);
+  border-radius:var(--radius);
+  box-shadow:0 7px 0 var(--ink);
+  padding:26px 22px 24px;
+  transition:transform .2s,box-shadow .2s;
+}
+.card:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 13px 0 var(--ink)}
+.card__icon{
+  width:62px;height:62px;
+  display:grid;place-items:center;
+  font-size:1.9rem;
+  border-radius:18px;
+  border:3px solid var(--ink);
+  margin-bottom:16px;
+}
+.card h3{font-size:1.18rem;margin-bottom:6px}
+.card p{font-size:.98rem;font-weight:500}
+.t-yellow{background:#FFF3B8}
+.t-pink{background:#FFD9E4}
+.t-cyan{background:#CFF6FC}
+.t-green{background:#D3F8E4}
+.t-purple{background:#EFD9F7}
+
+/* ============ why us ============ */
+.why{background:var(--purple-deep);color:#fff;padding:78px 0 90px}
+.why .kicker{background:var(--purple-deep);color:var(--yellow);border-color:var(--yellow)}
+.why__grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.feat{
+  background:rgba(255,255,255,.07);
+  border:2.5px solid rgba(255,255,255,.28);
+  border-radius:var(--radius);
+  padding:26px 22px;
+}
+.feat__badge{
+  font-family:var(--display);
+  width:46px;height:46px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  border:3px solid var(--ink);
+  margin-bottom:14px;
+  color:var(--ink);
+  font-size:1.05rem;
+}
+.feat h3{font-size:1.15rem;margin-bottom:6px}
+.feat p{font-size:.98rem;color:#EAD9F5;font-weight:500}
+.b-yellow{background:var(--yellow)}
+.b-pink{background:var(--pink)}
+.b-cyan{background:var(--cyan)}
+.b-green{background:var(--green)}
+
+/* ============ steps ============ */
+.steps{padding:76px 0 84px}
+.steps__grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;counter-reset:step}
+.step{
+  position:relative;
+  background:var(--white);
+  border:3px solid var(--ink);
+  border-radius:var(--radius);
+  box-shadow:0 7px 0 var(--ink);
+  padding:34px 24px 26px;
+}
+.step__num{
+  position:absolute;top:-24px;left:22px;
+  font-family:var(--display);
+  width:48px;height:48px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  border:3px solid var(--ink);
+  font-size:1.2rem;
+  box-shadow:0 4px 0 var(--ink);
+}
+.step h3{font-size:1.2rem;margin-bottom:8px}
+.step p{font-weight:500}
+
+/* ============ instagram ============ */
+.insta{padding:0 0 88px}
+.insta__grid{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:16px;
+}
+.tile{
+  aspect-ratio:1;
+  border-radius:20px;
+  border:3px solid var(--ink);
+  box-shadow:0 5px 0 var(--ink);
+  display:grid;place-items:center;
+  text-decoration:none;
+  font-family:var(--display);
+  font-size:2rem;
+  color:rgba(255,255,255,.95);
+  transition:transform .2s;
+}
+.tile:hover{transform:scale(1.05) rotate(2deg)}
+.tile--photo{overflow:hidden;background:var(--purple-deep)}
+.tile--photo img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.tile--photo:hover img{transform:scale(1.08)}
+
+/* ============ contact / footer ============ */
+.contact{background:var(--night);color:#fff;padding:80px 0 30px}
+.contact .kicker{background:var(--night);color:var(--cyan);border-color:var(--cyan)}
+.contact__grid{margin-top:40px;display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:start}
+.clist{list-style:none;display:grid;gap:16px;margin-top:8px}
+.clist li{display:flex;gap:14px;align-items:flex-start;font-weight:500}
+.clist .ico{
+  flex:none;width:44px;height:44px;
+  display:grid;place-items:center;
+  border-radius:14px;border:2.5px solid rgba(255,255,255,.35);
+  font-size:1.2rem;background:rgba(255,255,255,.07);
+}
+.clist a{color:var(--cyan);text-decoration:none;font-weight:700}
+.clist a:hover{text-decoration:underline}
+.clist small{display:block;color:#C9B3D8}
+.contact__card{
+  background:rgba(255,255,255,.06);
+  border:2.5px solid rgba(255,255,255,.25);
+  border-radius:var(--radius);
+  padding:30px 26px;
+}
+.contact__card h3{font-size:1.3rem;margin-bottom:10px;color:var(--yellow)}
+.contact__card p{color:#EAD9F5;font-weight:500;margin-bottom:20px}
+.foot{
+  margin-top:64px;
+  border-top:2px solid rgba(255,255,255,.18);
+  padding-top:22px;
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  color:#C9B3D8;font-size:.95rem;font-weight:500;
+}
+.foot a{color:var(--cyan);text-decoration:none}
+
+/* ============ reveal (only when JS is running) ============ */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
+@media print{.js .reveal{opacity:1;transform:none}}
+
+/* ============ responsive ============ */
+@media(max-width:860px){
+  .nav__links{
+    position:absolute;top:100%;left:0;right:0;
+    background:var(--cream);
+    border-bottom:3px solid var(--ink);
+    flex-direction:column;gap:0;
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+  }
+  .nav__links li{padding:0 22px}
+  .nav__links a{display:block;padding:14px 0}
+  .nav__links.open{max-height:320px}
+  .nav__burger{display:block}
+  .contact__grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__inner" id="tickerInner">
+    <span>👕 Quality uniforms for schools &amp; organisations</span><span>🌍 Worldwide shipping</span><span>💜 DM us your uniform list — we sort the rest</span><span>✨ Non-iron, stain-resistant, made to last</span>
+    <span>👕 Quality uniforms for schools &amp; organisations</span><span>🌍 Worldwide shipping</span><span>💜 DM us your uniform list — we sort the rest</span><span>✨ Non-iron, stain-resistant, made to last</span>
+  </div>
+</div>
+
+<!-- nav -->
+<nav class="nav">
+  <div class="nav__row">
+    <a class="brand" href="#top" aria-label="The School Shop — home">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="28" cy="64" r="22" fill="#8C1FA8"/><circle cx="72" cy="64" r="22" fill="#8C1FA8"/><circle cx="50" cy="60" r="30" fill="#8C1FA8"/>
+        <rect x="37" y="24" width="26" height="30" rx="5" fill="#8C1FA8"/>
+        <path d="M 30 24 L 50 8 L 70 24" stroke="#8C1FA8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="43" y="30" width="6" height="6" rx="2" fill="#2A1533"/><rect x="52" y="30" width="6" height="6" rx="2" fill="#2A1533"/>
+        <rect x="43" y="39" width="6" height="6" rx="2" fill="#2A1533"/><rect x="52" y="39" width="6" height="6" rx="2" fill="#2A1533"/>
+      </svg>
+      <span class="brand__name"><span class="c1">The</span> <span class="c2">School Shop</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#shop">What we make</a></li>
+      <li><a href="#why">Why us</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a class="btn btn--pink btn--sm" href="https://www.instagram.com/the_school_shop_/" target="_blank" rel="noopener">Shop on Instagram</a>
+      <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- hero -->
+<header class="hero" id="top">
+  <svg class="doodle doodle--star1" width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 3 L33 20 L51 21 L37 32 L42 50 L27 39 L12 50 L17 32 L3 21 L21 20 Z" fill="#FFDD15"/></svg>
+  <svg class="doodle doodle--star2" width="38" height="38" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 3 L33 20 L51 21 L37 32 L42 50 L27 39 L12 50 L17 32 L3 21 L21 20 Z" fill="#35DDF2"/></svg>
+  <svg class="doodle doodle--squig" width="90" height="40" viewBox="0 0 90 40" aria-hidden="true"><path d="M4 30 Q 15 6 26 22 Q 37 38 48 16 Q 59 -2 70 18 Q 78 32 86 20" stroke="#FF2E64" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+  <svg class="doodle doodle--pencil" width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><g transform="rotate(40 35 35)"><rect x="28" y="6" width="14" height="42" rx="2" fill="#FFDD15"/><rect x="28" y="6" width="14" height="8" rx="2" fill="#FF2E64"/><path d="M28 48 L35 64 L42 48 Z" fill="#F7C973"/><path d="M32.5 56.5 L35 64 L37.5 56.5 Z" fill="#2A1533"/></g></svg>
+
+  __HERO_LOGO__
+
+  <p style="margin-top:26px"><span class="kicker" style="background:transparent;color:var(--cyan);border-color:var(--cyan)">Manufacturer &amp; Supplier of School Uniforms</span></p>
+  <h1>Uniforms made to help them <span class="hl">shine at school</span></h1>
+  <p class="sub">Shirts, trousers, skirts, shoes and more — quality uniforms for schools and organisations, with worldwide shipping.</p>
+  <div class="hero__ctas">
+    <a class="btn btn--pink" href="https://www.instagram.com/the_school_shop_/" target="_blank" rel="noopener">🛍️ Shop on Instagram</a>
+    <a class="btn btn--yellow" href="#contact">Send us your uniform list</a>
+  </div>
+
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50 C 180 90 320 10 520 40 C 720 70 880 15 1080 40 C 1260 62 1360 45 1440 55 L1440 90 L0 90 Z" fill="#FFF7EC"/></svg>
+</header>
+
+<!-- categories -->
+<section class="cats" id="shop">
+  <div class="wrap center">
+    <span class="kicker" style="color:var(--purple)">What we make &amp; stock</span>
+    <h2 class="title">The <span style="color:var(--pink)">whole</span> uniform, one shop</h2>
+    <p class="lead">Tell us the school, the sizes and how many — we'll sort the rest, from the top button to the shoes.</p>
+    <div class="cats__grid">
+      <div class="card reveal"><div class="card__icon t-cyan">👔</div><h3>Shirts &amp; Blouses</h3><p>Slim and regular fits, non-iron and stain-resistant — with Easy Close top buttons for little fingers.</p></div>
+      <div class="card reveal"><div class="card__icon t-yellow">👖</div><h3>Trousers &amp; Shorts</h3><p>Adjustable waists, reinforced knees and stain-repelling finishes that survive playtime.</p></div>
+      <div class="card reveal"><div class="card__icon t-pink">🎀</div><h3>Skirts &amp; Pinafores</h3><p>Smart permanent pleats that stay put, crease-resistant fabric and comfy adjustable waists.</p></div>
+      <div class="card reveal"><div class="card__icon t-green">👟</div><h3>School Shoes</h3><p>Gripped soles, padded ankles and sturdy designs — smart enough for assembly, tough enough for break time.</p></div>
+      <div class="card reveal"><div class="card__icon t-purple">🧦</div><h3>Socks, Ties &amp; Accessories</h3><p>Socks, belts, ties and the little finishing touches that complete the look.</p></div>
+      <div class="card reveal"><div class="card__icon t-yellow">🎒</div><h3>Bags &amp; Essentials</h3><p>Backpacks and school-day essentials to carry it all in style.</p></div>
+      <div class="card reveal"><div class="card__icon t-cyan">🏢</div><h3>Uniforms for Organisations</h3><p>We manufacture uniforms for schools, teams and organisations — big or small orders welcome.</p></div>
+      <div class="card reveal"><div class="card__icon t-pink">🎁</div><h3>Gift Wrapping</h3><p>Turning a new uniform into a gift? We'll wrap it beautifully for you.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- why us -->
+<section class="why" id="why">
+  <div class="wrap center">
+    <span class="kicker">Why parents love us</span>
+    <h2 class="title">Uniform shopping, <span style="color:var(--cyan)">minus the stress</span></h2>
+    <div class="why__grid">
+      <div class="feat reveal"><div class="feat__badge b-yellow">1</div><h3>Made to last</h3><p>Non-iron shirts, stain &amp; weatherproof finishes, crease-resistant fabrics and reinforced knees — built for real school days.</p></div>
+      <div class="feat reveal"><div class="feat__badge b-green">2</div><h3>Kind to the planet</h3><p>Recycled polyester, responsibly sourced cotton and viscose — quality that doesn't cost the earth.</p></div>
+      <div class="feat reveal"><div class="feat__badge b-pink">3</div><h3>Fits that grow</h3><p>Adjustable waists, slim and regular fits, and sizes for every age — a perfect fit today with room for tomorrow.</p></div>
+      <div class="feat reveal"><div class="feat__badge b-cyan">4</div><h3>Worldwide shipping</h3><p>From our shop to your door — wherever your school is, we deliver.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- how it works -->
+<section class="steps" id="how">
+  <div class="wrap center">
+    <span class="kicker" style="color:var(--green)">How it works</span>
+    <h2 class="title">Three steps and <span style="color:var(--green)">you're done</span></h2>
+    <div class="steps__grid">
+      <div class="step reveal"><div class="step__num b-pink">1</div><h3>Send us the list 📩</h3><p>DM us the school, the uniform list and sizes on Instagram or WhatsApp.</p></div>
+      <div class="step reveal"><div class="step__num b-cyan">2</div><h3>We make &amp; pack it 📦</h3><p>We prepare every piece, confirm the total with you, and pack it with care.</p></div>
+      <div class="step reveal"><div class="step__num b-yellow">3</div><h3>We ship it 🌍</h3><p>Delivery or pickup — including worldwide shipping. Your little one is school-ready.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- instagram -->
+<section class="insta">
+  <div class="wrap center">
+    <span class="kicker" style="color:var(--pink)">On Instagram</span>
+    <h2 class="title">Follow the fun <span style="color:var(--pink)">@the_school_shop_</span></h2>
+    <p class="lead">400+ posts of new arrivals, clearance sales and back-to-school deals — sales drop first on our stories and WhatsApp status.</p>
+    <div class="insta__grid">
+__INSTA_TILES__
+    </div>
+    <div style="margin-top:34px">
+      <a class="btn btn--pink" href="https://www.instagram.com/the_school_shop_/" target="_blank" rel="noopener">Follow us on Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- contact -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="kicker">Get in touch</span>
+    <h2 class="title">Ready when <span style="color:var(--yellow)">you</span> are</h2>
+    <div class="contact__grid">
+      <div>
+        <p class="lead" style="color:#EAD9F5">The fastest way to order is a quick DM — send the uniform list and we'll take it from there. We ship worldwide.</p>
+        <ul class="clist" style="margin-top:26px">
+          <li><span class="ico">📸</span><div><a href="https://www.instagram.com/the_school_shop_/" target="_blank" rel="noopener">@the_school_shop_</a><small>DM us anytime — we reply fast</small></div></li>
+          <li><span class="ico">💬</span><div><a href="https://wa.me/23276602248">+232 76 602 248</a><small>WhatsApp or call — sales &amp; clearance drop first on our status</small></div></li>
+          <li><span class="ico">✉️</span><div><a href="mailto:info@theschoolshop.org">info@theschoolshop.org</a><small>For school &amp; bulk order enquiries</small></div></li>
+          <li><span class="ico">📍</span><div><strong>29B Kingharman Road</strong><small>Freetown, Sierra Leone — worldwide shipping available</small></div></li>
+        </ul>
+      </div>
+      <div class="contact__card reveal">
+        <h3>School or organisation? 🏫</h3>
+        <p>We manufacture and supply uniforms in bulk for schools, teams and organisations. Send us your requirements and we'll quote one friendly price.</p>
+        <a class="btn btn--green" href="https://wa.me/23276602248?text=Hello%20The%20School%20Shop!%20I%27d%20like%20a%20quote%20for%20school%20uniforms." target="_blank" rel="noopener">Request a quote on WhatsApp</a>
+      </div>
+    </div>
+    <div class="foot">
+      <span>© <span id="year">2026</span> The School Shop. All rights reserved.</span>
+      <span>Made with 💜 for little learners</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// mobile menu
+const burger=document.getElementById('burger');
+const links=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{
+  const open=links.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// scroll reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// year
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
