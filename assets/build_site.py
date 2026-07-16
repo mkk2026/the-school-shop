@@ -8,6 +8,7 @@ import base64
 import pathlib
 import re
 import sys
+from urllib.parse import quote
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
@@ -120,6 +121,29 @@ GALLERY = [
 CAT_PHOTOS = ["shirts-white", "trousers-grey", "skirt-navy-2pleat",
               "shoes-black-leather", "polos-red"]
 
+# showroom: individual products a customer can browse & order.
+# (photo slug in assets/insta/, product name, one short detail line, category)
+# category order below defines the order of the filter chips.
+SHOWROOM = [
+    ("shirts-white", "Non-Iron White Shirt", "Zero ironing · slim & regular fit", "Shirts"),
+    ("shirts-blue", "Blue Short-Sleeve Shirt", "Cool & breathable for warm days", "Shirts"),
+    ("polos-red", "Red Cotton Polo", "Pure cotton · stain resistant", "Shirts"),
+    ("blouse-embroidered", "Girls Embroidered Collar Blouse", "Limited edition · pack of 2", "Shirts"),
+    ("trousers-grey", "Grey School Trousers", "Teflon® finish · adjustable waist", "Trousers"),
+    ("shorts-navy", "Navy School Shorts", "New slimmer, comfier cut", "Trousers"),
+    ("shorts-navy-elastic", "Boys Half-Elasticated Shorts", "Elasticated back waist · ages 3–4 to 11–12", "Trousers"),
+    ("shorts-navy-smart", "Boys Navy Shorts", "Smart belt loops · pack of 2", "Trousers"),
+    ("skirt-navy-2pleat", "Navy Two-Pleat Skirt", "Permanent pleats · senior girls", "Skirts"),
+    ("skirt-navy-pleated", "Navy Pleated Skirt", "Crease-resistant · adjustable waist", "Skirts"),
+    ("skirt-navy-permanent", "Navy Permanent Pleats Skirt", "Permanent pleats · pack of 2", "Skirts"),
+    ("skirt-navy-bow", "Girls Junior Bow Skirt", "Bow detail · ages 3–4 to 11–12", "Skirts"),
+    ("skirt-navy-senior", "Senior Girls Pleated Skirt", "Pack of 2 · ages 11–12 to 14–15", "Skirts"),
+    ("skirt-navy-flare", "Junior Girls Pleated Flare Skirt", "Pack of 2 · ages 3–4 to 11–12", "Skirts"),
+    ("shoes-black-leather", "Black Leather Shoes", "Classic smart lace-ups", "Shoes"),
+    ("shoes-black-canvas", "Black Canvas Shoes", "Gripped soles · lace-up", "Shoes"),
+    ("shoes-lol", "L.O.L Character Sneakers", "Fun character kicks for little ones", "Shoes"),
+]
+
 for slug, _ in GALLERY:
     im = Image.open(HERE / "insta" / f"{slug}.jpg").convert("RGB")
     w, h = im.size
@@ -137,9 +161,39 @@ for slug in CAT_PHOTOS:
         im = im.resize((720, 540), Image.LANCZOS)
     im.save(WEB / f"cat-{slug}.jpg", "JPEG", quality=80, optimize=True)
 
+# showroom product covers (4:3, same crop as category cards)
+for slug, *_ in SHOWROOM:
+    im = Image.open(HERE / "insta" / f"{slug}.jpg").convert("RGB")
+    w, h = im.size
+    tw, th = (w, round(w * 3 / 4)) if h >= w * 3 / 4 else (round(h * 4 / 3), h)
+    im = im.crop(((w - tw) // 2, (h - th) // 2, (w + tw) // 2, (h + th) // 2))
+    if im.width > 640:
+        im = im.resize((640, 480), Image.LANCZOS)
+    im.save(WEB / f"shop-{slug}.jpg", "JPEG", quality=80, optimize=True)
+
 gallery_html = "\n".join(
     f'      <figure class="reveal"><img src="__IMG:gal-{slug}__" alt="{alt}" loading="lazy"></figure>'
     for slug, alt in GALLERY
+)
+
+
+def wa_order(name: str) -> str:
+    """WhatsApp deep link pre-filled with the product name."""
+    msg = f"Hello The School Shop! I'd like to order: {name}"
+    return f"https://wa.me/23276602248?text={quote(msg)}"
+
+
+showroom_html = "\n".join(
+    f'      <article class="prod" data-cat="{cat}">'
+    f'<div class="prod__media"><img src="__IMG:shop-{slug}__" alt="{name}" loading="lazy"></div>'
+    f'<div class="prod__body"><h3>{name}</h3><p>{note}</p>'
+    f'<a class="btn btn--green btn--sm" href="{wa_order(name)}" target="_blank" rel="noopener">Order on WhatsApp</a>'
+    f'</div></article>'
+    for slug, name, note, cat in SHOWROOM
+)
+chip_cats = list(dict.fromkeys(cat for *_, cat in SHOWROOM))
+chips_html = '      <button class="chip is-active" data-filter="all">All</button>\n' + "\n".join(
+    f'      <button class="chip" data-filter="{c}">{c}</button>' for c in chip_cats
 )
 
 template = (ROOT / "index.template.html").read_text()
@@ -148,7 +202,9 @@ page = (template
         .replace("__FONT_TITAN__", titan_b64)
         .replace("__FONT_BALOO__", baloo_b64)
         .replace("__HERO_LOGO__", hero)
-        .replace("__GALLERY__", gallery_html))
+        .replace("__GALLERY__", gallery_html)
+        .replace("__SHOWROOM_CHIPS__", chips_html)
+        .replace("__SHOWROOM__", showroom_html))
 
 # index.html references the generated files (fast, cacheable)
 html = re.sub(r"__IMG:([a-z0-9-]+)__", r"assets/web/\1.jpg", page)

@@ -208,6 +208,46 @@ h2.title{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:12px}
 .t-green{background:#D3F8E4}
 .t-purple{background:#EFD9F7}
 
+/* ============ showroom ============ */
+.showroom{padding:74px 0 86px;background:#F6ECFB;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:32px 0 4px}
+.chip{
+  font-family:var(--body);font-weight:800;font-size:.92rem;
+  padding:9px 18px;border-radius:999px;
+  border:2.5px solid var(--ink);background:var(--white);color:var(--ink);
+  cursor:pointer;box-shadow:0 4px 0 var(--ink);
+  transition:transform .12s,box-shadow .12s,background .12s;
+}
+.chip:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--ink)}
+.chip:active{transform:translateY(1px);box-shadow:0 2px 0 var(--ink)}
+.chip.is-active{background:var(--yellow)}
+.prods{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:22px;
+}
+.prod{
+  background:var(--white);
+  border:3px solid var(--ink);
+  border-radius:var(--radius);
+  box-shadow:0 7px 0 var(--ink);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  text-align:left;
+  transition:transform .2s,box-shadow .2s;
+}
+.prod:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 13px 0 var(--ink)}
+.prod__media{aspect-ratio:4/3;border-bottom:3px solid var(--ink);overflow:hidden}
+.prod__media img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.prod:hover .prod__media img{transform:scale(1.06)}
+.prod__body{padding:16px 18px 20px;display:flex;flex-direction:column;flex:1}
+.prod__body h3{font-size:1.05rem;margin-bottom:5px}
+.prod__body p{font-size:.92rem;font-weight:500;flex:1;margin-bottom:14px}
+.prod__body .btn{align-self:flex-start}
+.prod.is-hidden{display:none}
+.showroom__empty{margin-top:26px;font-weight:600;color:var(--purple-deep)}
+
 /* ============ why us ============ */
 .why{background:var(--purple-deep);color:#fff;padding:78px 0 90px}
 .why .kicker{background:var(--purple-deep);color:var(--yellow);border-color:var(--yellow)}
@@ -391,6 +431,7 @@ body.lb-open .nav,body.lb-open .ticker{visibility:hidden}
     </a>
     <ul class="nav__links" id="navLinks">
       <li><a href="#shop">What we make</a></li>
+      <li><a href="#showroom">Showroom</a></li>
       <li><a href="#why">Why us</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#gallery">Gallery</a></li>
@@ -439,6 +480,22 @@ body.lb-open .nav,body.lb-open .ticker{visibility:hidden}
       <div class="card reveal"><div class="card__media"><img src="__IMG:cat-polos-red__" alt="Red pure cotton polo shirts" loading="lazy"></div><div class="card__body"><h3>🏢 Uniforms for Organisations</h3><p>We manufacture uniforms for schools, teams and organisations — big or small orders welcome.</p></div></div>
       <div class="card reveal"><div class="card__media card__media--emoji t-pink">🎁</div><div class="card__body"><h3>Gift Wrapping</h3><p>Turning a new uniform into a gift? We'll wrap it beautifully for you.</p></div></div>
     </div>
+  </div>
+</section>
+
+<!-- showroom -->
+<section class="showroom" id="showroom">
+  <div class="wrap center">
+    <span class="kicker" style="color:var(--purple)">Showroom</span>
+    <h2 class="title">Browse the <span style="color:var(--purple)">shop</span></h2>
+    <p class="lead">Have a look through what's in stock right now. Find what you need, tap <strong>Order on WhatsApp</strong>, and just tell us the size and how many.</p>
+    <div class="chips" id="chips" role="group" aria-label="Filter products by type">
+__SHOWROOM_CHIPS__
+    </div>
+    <div class="prods" id="prods">
+__SHOWROOM__
+    </div>
+    <p class="showroom__empty" id="prodsEmpty" hidden>Nothing here yet — <a href="https://wa.me/23276602248" target="_blank" rel="noopener">message us</a> and we'll sort you out.</p>
   </div>
 </section>
 
@@ -568,6 +625,27 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')show(cur-1);
   if(e.key==='ArrowRight')show(cur+1);
 });
+
+// showroom filter
+const chips=document.getElementById('chips');
+if(chips){
+  const prods=[...document.querySelectorAll('#prods .prod')];
+  const empty=document.getElementById('prodsEmpty');
+  chips.addEventListener('click',e=>{
+    const btn=e.target.closest('.chip');
+    if(!btn)return;
+    chips.querySelectorAll('.chip').forEach(c=>c.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    const f=btn.dataset.filter;
+    let shown=0;
+    prods.forEach(p=>{
+      const hide=f!=='all'&&p.dataset.cat!==f;
+      p.classList.toggle('is-hidden',hide);
+      if(!hide)shown++;
+    });
+    if(empty)empty.hidden=shown>0;
+  });
+}
 </script>
 </body>
 </html>
